@@ -36,18 +36,10 @@ composer install
 cp .env.example .env
 php artisan key:generate
 
-# 3. Configure the database in .env
-#    DB_CONNECTION=mysql
-#    DB_HOST=127.0.0.1
-#    DB_PORT=3306
-#    DB_DATABASE=library_management
-#    DB_USERNAME=library
-#    DB_PASSWORD=your_password
-
-# 4. Run migrations (and seeders for sample data)
+# 3. Run migrations (and seeders for sample data)
 php artisan migrate --seed
 
-# 5. Serve the API
+# 4. Serve the API
 php artisan serve
 ```
 
@@ -61,28 +53,6 @@ The API will be available at `http://127.0.0.1:8000/api`.
 ```
 Authorization: Bearer <your-token>
 Accept: application/json
-```
-
-## Response format
-
-Every response uses a consistent envelope:
-
-```json
-{
-  "success": true,
-  "message": "OK",
-  "data": { }
-}
-```
-
-Errors:
-
-```json
-{
-  "success": false,
-  "message": "The given data was invalid.",
-  "errors": { "email": ["The email field is required."] }
-}
 ```
 
 ## API endpoints
@@ -107,16 +77,26 @@ Errors:
 | PUT | `/api/loans/{id}/return` | Yes | Return a borrowed book |
 | GET | `/api/loans` | Yes | List the books you are currently borrowing |
 
-## Development workflow
+## Testing
 
-Each feature module is developed on its own branch and merged into `main`
-through a separate pull request:
+Unit tests cover the loan rules: stock, the 3-book limit, duplicate titles, and returns.
 
-- `feature/project-setup` — Laravel + Sanctum scaffolding
-- `feature/auth` — authentication module
-- `feature/categories` — category CRUD
-- `feature/books` — book CRUD
-- `feature/loans` — borrowing and returning
+Tests use a separate database. Create it once:
+
+```sql
+CREATE DATABASE library_management_test;
+GRANT ALL PRIVILEGES ON library_management_test.* TO 'library'@'localhost';
+FLUSH PRIVILEGES;
+```
+
+Run:
+
+```bash
+php artisan test
+
+# just the loan tests
+php artisan test tests/Unit/LoanServiceTest.php
+```
 
 ## Tech stack
 
