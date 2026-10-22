@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LoanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,5 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('books', BookController::class);
 
-    // Feature module routes are registered here in their respective PRs.
+    Route::get('loans', [LoanController::class, 'index']);
+    Route::post('loans', [LoanController::class, 'store']);
+    Route::put('loans/{loan}/return', [LoanController::class, 'returnBook']);
 });
