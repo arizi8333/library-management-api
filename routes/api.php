@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,11 +21,18 @@ Route::get('/', fn () => response()->json([
     'data' => ['version' => '1.0.0'],
 ]));
 
+// Public auth routes.
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
 /*
 |--------------------------------------------------------------------------
 | Protected routes
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/me', [AuthController::class, 'me']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+
     // Feature module routes are registered here in their respective PRs.
 });
