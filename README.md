@@ -45,6 +45,17 @@ php artisan serve
 
 The API will be available at `http://127.0.0.1:8000/api`.
 
+## API documentation (Swagger)
+
+Interactive docs are available at:
+
+```
+http://127.0.0.1:8000/api/documentation
+```
+
+Log in via the `/api/login` endpoint, copy the token, click **Authorize**,
+and paste it to try the protected endpoints straight from the browser.
+
 ## Authentication
 
 1. `POST /api/register` or `POST /api/login` to obtain a token.
